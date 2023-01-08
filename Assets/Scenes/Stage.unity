@@ -294,7 +294,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070976116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 38.2, y: 3.8, z: -12}
+  m_LocalPosition: {x: 20, y: 3.8, z: -20}
   m_LocalScale: {x: 5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -422,8 +422,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508841048}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.6, y: -1, z: -5}
-  m_LocalScale: {x: 20, y: 7, z: 14}
+  m_LocalPosition: {x: -20, y: -1, z: -5}
+  m_LocalScale: {x: 40, y: 7, z: 14}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -569,7 +569,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3748a90f7057e407c9412adaef2685e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  penguinPrefab: {fileID: 9075243667343692098, guid: a83161bb518a64058b3cc08ef786da72, type: 3}
+  penguin: {fileID: 9075243667343692098, guid: a83161bb518a64058b3cc08ef786da72, type: 3}
+  penguinWalkPrefabs:
+  - {fileID: -202487397503303402, guid: 4243f61db37e840d8866fdc8803c9720, type: 3}
+  - {fileID: 376055792537539409, guid: 00c343e15e8304176b82cb6e80a42d55, type: 3}
+  - {fileID: 396714478431919147, guid: d7159392442e64388b5d615c556c31a8, type: 3}
+  - {fileID: 7961427983014670652, guid: 9fa972fcb73c64385bce5f70cdc53b35, type: 3}
+  - {fileID: 3506939649436498720, guid: 48b5b602b3263424fb67e89b5c7ff96d, type: 3}
+  - {fileID: 4711256440103735264, guid: f92680d3b76284708ba219074992d75d, type: 3}
+  - {fileID: 2130127412527244874, guid: 5a6305391b6514494b92e28b0d55485c, type: 3}
+  - {fileID: 4683557822386405649, guid: 507d0ace661c242c49f324cb4ddc332b, type: 3}
 --- !u!4 &1868648589
 Transform:
   m_ObjectHideFlags: 0

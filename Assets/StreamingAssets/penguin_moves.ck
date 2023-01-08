@@ -1,9 +1,9 @@
 // number of penguins (matches the Unity global var NUM_PENGUINS)
-3 => int NUM_PENGUINS;
+6 => int NUM_PENGUINS;
 // beat (smallest div; duration bewteen penguins)
-300::ms => dur BEAT;
+600::ms => dur BEAT;
 // update rate for position
-10::ms => dur POS_RATE;
+5::ms => dur POS_RATE;
 // increment per step
 POS_RATE/BEAT => float posInc;
 
@@ -23,6 +23,8 @@ global float playheadPos;
 SndBuf buffer => dac;
 "Assets/StreamingAssets/voice_attack.wav" => buffer.read;
 
+// spork update, runs concurrently with while loop 
+spork ~ playheadPosUpdate();
 
 // simple sequencer loop
 while (1) {
@@ -38,3 +40,12 @@ while (1) {
     currPenguin % NUM_PENGUINS => currPenguin;    
 }
 
+// Tells Unity where the playhead is precisely between the big penguins
+fun void playheadPosUpdate() {
+    while (1) {
+        // increment
+        posInc +=> playheadPos;
+        // advance time
+        POS_RATE => now;
+    }
+}
