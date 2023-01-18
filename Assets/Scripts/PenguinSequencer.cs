@@ -9,10 +9,10 @@ public class PenguinSequencer : MonoBehaviour
     Graphics
     */
     int index = 0;
-    // big penguins' prefab (separate from penguinWalkPrefabs)
+    // standstill penguin prefab (separate from penguinWalkPrefabs)
     public GameObject penguin;
     // stores the walking animated penguin prefabs
-    public GameObject[] penguinWalkPrefabs;
+    public GameObject penguinWalk;
     // global variable for number of penguins 
     int NUM_PENGUINS = 6;
     int NUM_WALK_PENGUINS = 6;
@@ -31,6 +31,8 @@ public class PenguinSequencer : MonoBehaviour
     // int sync
     private ChuckIntSyncer currPenguin;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,62 +50,58 @@ public class PenguinSequencer : MonoBehaviour
         playheadPos.SyncFloat(GetComponent<ChuckSubInstance>(), "playheadPos");
         // add int sync
         currPenguin = gameObject.AddComponent<ChuckIntSyncer>();
-        currPenguin.SyncInt(GetComponent<ChuckSubInstance>(), "current penguin");
+        currPenguin.SyncInt(GetComponent<ChuckSubInstance>(), "currPenguin");
     }
 
     void InitGraphics() {
         // load all the walking penguin prefabs for moving playhead
-        penguinWalkPrefabs = new GameObject[NUM_WALK_PENGUINS];
-        for (int i = 0; i < NUM_WALK_PENGUINS; i++) {
-            penguinWalkPrefabs[i] = Resources.Load("Prefabs/Walk/PenguinWalk0" + (i + 1).ToString()) as GameObject;
-        }
-        // create penguin array
+        // penguinWalk = new GameObject[NUM_WALK_PENGUINS];
+        // for (int i = 0; i < NUM_WALK_PENGUINS; i++) {
+        //     penguinWalk[i] = Resources.Load("Prefabs/Walk/PenguinWalk0" + (i + 1).ToString()) as GameObject;
+        // }
+        // create standstill penguin array
         penguinArr = new GameObject[NUM_PENGUINS];
         // offset
         float offset = penguinSpacing * (NUM_PENGUINS - 1);
-        // make penguins
+        // make standstill penguins
         for (int i = 0; i < NUM_PENGUINS; i++) {
             // clones the object original and returns the clone, face camera by default
             // https://docs.unity3d.com/ScriptReference/Object.Instantiate.html
-            penguinArr[i] = Instantiate(penguin, new Vector3(-80 + offset / 2 + i * penguinSpacing, 10,0), Quaternion.Euler(0, 0, 0));
+            // penguinArr[i] = Instantiate(penguin, new Vector3(-80 + offset / 2 + i * penguinSpacing, 10,0), Quaternion.Euler(0, 0, 0));
+            penguinArr[i] = Instantiate(penguin, new Vector3(-offset / 2 + i * penguinSpacing, 10,0), Quaternion.Euler(0, 0, 0));
         }
-        
-        // for (int i = 0; i < NUM_WALK_PENGUINS; i++) {
-            // make playhead
-            // playhead = Instantiate(penguin, new Vector3(0,0,0), Quaternion.Euler(0,0,0));
-            // move playhead
-            // playhead.transform.position = new Vector3(0.75f,2.75f,-2.0f);
-            // scale playhead
-            // playhead.transform.localScale = new Vector3(.75f, .75f, 3f);
-        // }
-        // // first penguin
-        // penguin = penguinArr[0];
-        // // make selector
-        // selector = Instantiate(selectorPrefab, new Vector3(penguin.transform.position.x, 
-        //                                          .2f + penguin.GetComponentInChildren<Skinned   ))
+        // make playhead
+        playhead = Instantiate(penguinWalk, new Vector3(0,0,0), Quaternion.Euler(0,0,0));
+        // move playhead
+        playhead.transform.position = new Vector3(0,0f,-2.0f);
+        // scale playhead
+        playhead.transform.localScale = new Vector3(3f, 3f, 3f);
+        // penguinWalk = Resources.Load("Prefabs/Walk/PenguinWalk01".ToString()) as GameObject; old penguin walk sprite
     }
 
     // Update is called once per frame
     void Update()
     {
         // delete old prefab
-        if (playhead != null) 
-            Destroy(playhead);
+        // if (playhead != null) 
+            // Destroy(playhead);
         // ensure that we instantiate a different prefab every update
-        playhead = Instantiate(penguinWalkPrefabs[index], new Vector3(0,0,0), Quaternion.Euler(0,0,0));
-        
+        // playhead = Instantiate(penguinWalkPrefabs[index], new Vector3(0,0,0), Quaternion.Euler(0,0,0));
+        // creating animator for walking penguin
+        // animPlayhead = playhead.GetComponent<Animator>();
         /** Getting chucK float syncer/playhead position in InitAudio() **/
-        float offset = penguinSpacing * (NUM_WALK_PENGUINS - 1);
+        float offset = penguinSpacing * (NUM_PENGUINS - 1) + penguinSpacing*.25f;
         // maps the chucK playhead position to big penguin spacing in Unity
         // to have small penguin travel to each big penguin
         playhead.transform.position = new Vector3(
-                                        50 + offset / 4 + penguinSpacing * playheadPos.GetCurrentValue(),
-                                        28,
-                                        .5f);
-        playhead.transform.localScale = new Vector3(3f, 3f, 1f);
-        index++;
-        if (index >= NUM_WALK_PENGUINS) {
-            index = 0;
-        }                     
+                                       -.5f*offset + penguinSpacing * playheadPos.GetCurrentValue(),
+                                        7f,
+                                        -2f);    
+        // animating playhead
+        // animateUpdate();         
     }
+
+    // void animationUpdate() {
+    //     animatePlayhead.Play("walk")
+    // }
 }

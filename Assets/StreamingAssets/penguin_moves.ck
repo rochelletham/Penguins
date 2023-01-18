@@ -3,7 +3,7 @@
 // beat (smallest div; duration bewteen penguins)
 600::ms => dur BEAT;
 // update rate for position
-5::ms => dur POS_RATE;
+10::ms => dur POS_RATE;
 // increment per step
 POS_RATE/BEAT => float posInc;
 
@@ -17,16 +17,14 @@ global float playheadPos;
 //while (true) {
 //    Math.random2f(300,1000) => foo.freq;
 //    100::ms => now;
-// }
+//}
 
-// TODO: need to add soundfile
 SndBuf buffer => dac;
 "Assets/StreamingAssets/voice_attack.wav" => buffer.read;
 
 // spork update, runs concurrently with while loop 
 spork ~ playheadPosUpdate();
 
-// simple sequencer loop
 while (1) {
     // play audio file at beginning
     0 => buffer.pos;
